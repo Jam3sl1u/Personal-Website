@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jam3sl1u.github.io/sitemap.xml
