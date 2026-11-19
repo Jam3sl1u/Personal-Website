@@ -6,7 +6,7 @@ export const site = {
   name: 'James Liu',
   initials: 'JL',
   role: 'Software Engineer',
-  roleLine: 'Software Engineer · CS and Informatics, UC Irvine',
+  roleLine: "Software Engineer · B.S. Computer Science (Informatics minor), UC Irvine '27",
   location: 'Orange County, California',
   /** Canonical public URL (GitHub Pages project site). Used for any absolute link. */
   url: 'https://jam3sl1u.github.io/portfolio/',
