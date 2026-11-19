@@ -51,7 +51,7 @@ export function Header() {
   const activeNav = onHome && activeSection ? sectionToNav[activeSection] : null
   const resume = resumeLink()
   const resumeCls =
-    'inline-flex h-10 items-center gap-2 rounded-full border border-line-strong px-4 text-sm font-medium transition-colors duration-300 hover:border-fg hover:bg-fg/5'
+    'h-10 items-center gap-2 rounded-full border border-line-strong px-4 text-sm font-medium transition-colors duration-300 hover:border-fg hover:bg-fg/5'
 
   const items = nav.map((item) => {
     const key = item.section
@@ -89,14 +89,14 @@ export function Header() {
               setOpen(false)
               if (onHome) scrollToTop()
             }}
-            className="group flex items-center gap-3"
+            className="group flex shrink-0 items-center gap-3"
             aria-label={`${site.name}, home`}
           >
-            <span className="relative flex size-8 items-center justify-center rounded-lg border border-line-strong font-mono text-[0.7rem] font-medium tracking-tight transition-colors duration-300 group-hover:border-accent group-hover:text-accent">
+            <span className="relative flex size-8 shrink-0 items-center justify-center rounded-lg border border-line-strong font-mono text-[0.7rem] font-medium tracking-tight transition-colors duration-300 group-hover:border-accent group-hover:text-accent">
               {site.initials}
               <span className="absolute -right-0.5 -top-0.5 size-1.5 rounded-full bg-accent" aria-hidden="true" />
             </span>
-            <span className="text-[0.95rem] font-medium tracking-[-0.01em]">{site.name}</span>
+            <span className="whitespace-nowrap text-[0.95rem] font-medium tracking-[-0.01em]">{site.name}</span>
           </Link>
 
           <nav aria-label="Primary" className="hidden md:block">
