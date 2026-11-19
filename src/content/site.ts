@@ -35,7 +35,7 @@ export const site = {
    * Download Resume button switches to the PDF automatically; until then they
    * open the online resume at /resume.
    */
-  resumePdf: null as string | null,
+  resumePdf: 'James-Liu-Resume.pdf' as string | null,
   /** File name the browser saves the PDF as. */
   resumeDownloadName: 'James-Liu-Resume.pdf',
   /**
