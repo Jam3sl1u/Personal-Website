@@ -7,8 +7,6 @@ import { Contact } from '../sections/Contact'
 import { Education } from '../sections/Education'
 import { Experience } from '../sections/Experience'
 import { Hero } from '../sections/Hero'
-import { Leadership } from '../sections/Leadership'
-import { LookingFor } from '../sections/LookingFor'
 import { Projects } from '../sections/Projects'
 import { Skills } from '../sections/Skills'
 
@@ -27,13 +25,11 @@ export function Home() {
   return (
     <>
       <Hero />
-      <About />
       <Experience />
       <Projects />
+      <About />
       <Skills />
       <Education />
-      <Leadership />
-      <LookingFor />
       <Contact />
     </>
   )

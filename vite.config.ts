@@ -9,7 +9,7 @@ import tailwindcss from '@tailwindcss/vite'
 //   - custom domain: https://example.com/
 // That is possible because routing is hash-based (see src/App.tsx), so every
 // page is served from the same index.html and relative asset URLs always resolve.
-// Set VITE_BASE (for example "/Personal-Website/") only if you need absolute URLs.
+// Set VITE_BASE (for example "/portfolio/") only if you need absolute URLs.
 export default defineConfig({
   base: process.env.VITE_BASE ?? './',
   plugins: [react(), tailwindcss()],

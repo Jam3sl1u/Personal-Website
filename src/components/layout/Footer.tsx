@@ -1,11 +1,12 @@
 import { ArrowUp } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { site } from '../../content/site'
+import { resumeLink, site } from '../../content/site'
 import { scrollToTop } from '../../lib/scroll'
 
 export function Footer() {
   const year = new Date().getFullYear()
-  const linkCls = 'text-muted underline-offset-4 transition-colors hover:text-fg hover:underline'
+  const resume = resumeLink()
+  const linkCls = 'inline-flex min-h-8 items-center text-muted underline-offset-4 transition-colors hover:text-fg hover:underline'
   return (
     <footer className="no-print border-t border-line">
       <div className="container-page flex flex-col gap-8 py-10 md:flex-row md:items-center md:justify-between">
@@ -25,9 +26,16 @@ export function Footer() {
           <a href={site.links.linkedin} target="_blank" rel="noreferrer noopener" className={linkCls}>
             LinkedIn
           </a>
-          <Link to="/resume" className={linkCls}>
-            Resume
-          </Link>
+          {resume.kind === 'pdf' ? (
+            <a href={resume.href} download={resume.download} target="_blank" rel="noreferrer noopener" className={linkCls}>
+              Resume
+              <span className="sr-only">(PDF, opens in a new tab)</span>
+            </a>
+          ) : (
+            <Link to={resume.to} className={linkCls}>
+              Resume
+            </Link>
+          )}
         </nav>
         <button
           type="button"

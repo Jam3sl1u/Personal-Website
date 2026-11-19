@@ -228,70 +228,6 @@ function CalendarVisual() {
   )
 }
 
-/* ---------- 04 Fashion-MNIST: pixels in, class out ---------- */
-const shirt = [
-  '..............',
-  '...###..###...',
-  '..##########..',
-  '.############.',
-  '##############',
-  '###.######.###',
-  '.#..######..#.',
-  '....######....',
-  '....######....',
-  '....######....',
-  '....######....',
-  '....######....',
-  '....######....',
-  '..............',
-]
-
-function MnistVisual() {
-  // Verified results only. kNN is 82.5% accuracy (17.5% test error at k=10).
-  const bars = [
-    ['SVM · RBF', 86, true],
-    ['MLP · ReLU', 83, false],
-    ['kNN · k=10', 82.5, false],
-    ['MLP · tanh', 72, false],
-  ] as const
-  return (
-    <Frame className="aspect-[4/3]" label="Test accuracy by model">
-      <div className="absolute inset-0 grid grid-cols-[auto_1fr] items-center gap-[6%] p-[7%] pb-[12%]" aria-hidden="true">
-        <div>
-          <div className="grid w-[7.5rem] grid-cols-[repeat(14,1fr)] gap-px rounded-lg border border-line bg-surface p-2 sm:w-36">
-            {shirt.flatMap((row, r) =>
-              row.split('').map((ch, c) => (
-                <span
-                  key={`${r}-${c}`}
-                  className="aspect-square rounded-[1px] bg-fg transition-opacity duration-700"
-                  style={{ opacity: ch === '#' ? 0.45 + (((r * 7 + c * 13) % 5) / 5) * 0.5 : 0.05 }}
-                />
-              )),
-            )}
-          </div>
-          <p className="mt-2.5 text-center font-mono text-[0.6rem] uppercase tracking-widest text-faint">28 × 28 · 10 classes</p>
-        </div>
-        <ul className="space-y-3.5">
-          {bars.map(([name, value, best]) => (
-            <li key={name}>
-              <div className="flex items-baseline justify-between font-mono text-[0.7rem]">
-                <span className={best ? 'text-fg' : 'text-muted'}>{name}</span>
-                <span className={best ? 'text-accent' : 'text-muted'}>{value}%</span>
-              </div>
-              <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-fg/10">
-                <div
-                  className={`h-full origin-left rounded-full transition-transform duration-700 ease-out group-hover/project:scale-x-100 ${best ? 'bg-accent' : 'bg-fg/45'} scale-x-[0.97]`}
-                  style={{ width: `${value}%` }}
-                />
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </Frame>
-  )
-}
-
 export function ProjectVisualFor({ visual }: { visual: ProjectVisual }) {
   switch (visual) {
     case 'chariot':
@@ -300,7 +236,5 @@ export function ProjectVisualFor({ visual }: { visual: ProjectVisual }) {
       return <GracefulVisual />
     case 'calendar':
       return <CalendarVisual />
-    case 'mnist':
-      return <MnistVisual />
   }
 }

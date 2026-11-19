@@ -2,6 +2,7 @@ import { ArrowDown, ArrowUpRight } from 'lucide-react'
 import { motion } from 'motion/react'
 import { SystemGraph } from '../components/hero/SystemGraph'
 import { Button } from '../components/ui/Button'
+import { ResumeButton } from '../components/ui/ResumeButton'
 import { GithubIcon, LinkedinIcon } from '../components/ui/icons'
 import { site } from '../content/site'
 import { ease, fadeUp, riseWord, stagger } from '../lib/motion'
@@ -19,14 +20,14 @@ export function Hero() {
         aria-hidden="true"
       />
 
-      <div className="container-page grid min-h-[100svh] items-center gap-x-10 gap-y-14 pb-20 pt-28 lg:grid-cols-12 lg:pb-24 lg:pt-24">
+      <div className="container-page grid min-h-[100svh] items-center gap-x-10 gap-y-14 pb-20 pt-28 lg:grid-cols-12 lg:pb-24 lg:pt-28">
         <motion.div className="lg:col-span-7" variants={stagger(0.09, 0.1)} initial="hidden" animate="show">
           <motion.p variants={fadeUp} className="inline-flex max-w-full items-center gap-2.5 rounded-full border border-line bg-elev/60 py-1.5 pl-3 pr-4 text-[0.8rem] text-muted backdrop-blur">
             <span className="anim-pulse-dot size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
             <span>{site.status}</span>
           </motion.p>
 
-          <h1 className="mt-7 text-[clamp(3.6rem,10vw,8.25rem)] font-medium leading-[0.88] tracking-[-0.055em]">
+          <h1 className="mt-7 text-[clamp(3.4rem,8.5vw,6.75rem)] font-medium leading-[0.88] tracking-[-0.055em]">
             <span className="block overflow-hidden pb-[0.06em]">
               <motion.span variants={riseWord} className="block">
                 {first}
@@ -44,17 +45,29 @@ export function Hero() {
             {site.roleLine}
           </motion.p>
 
-          <motion.p variants={fadeUp} className="mt-7 max-w-2xl text-[clamp(1.55rem,3vw,2.45rem)] font-medium leading-[1.12] tracking-[-0.03em] text-balance">
-            {site.headline.lines.map((line) => (
-              <span key={line.plain} className="block">
-                {line.plain} <span className="serif-accent text-accent">{line.accent}</span>
-              </span>
-            ))}
+          <motion.p variants={fadeUp} className="mt-7 max-w-2xl text-[clamp(1.6rem,3vw,2.35rem)] font-medium leading-[1.1] tracking-[-0.03em] text-balance">
+            {site.headline.plain} <span className="serif-accent text-accent">{site.headline.accent}</span>
           </motion.p>
 
-          <motion.p variants={fadeUp} className="mt-6 max-w-xl text-[1.05rem] leading-relaxed text-muted text-pretty">
+          <motion.p variants={fadeUp} className="mt-5 max-w-xl text-[1.02rem] leading-relaxed text-muted text-pretty">
             {site.intro}
           </motion.p>
+
+          <motion.dl variants={fadeUp} className="mt-6 flex flex-wrap gap-x-10 gap-y-4" aria-label="Recent results">
+            {site.proof.map((p) => (
+              <div key={p.label} className="border-l border-line-strong pl-4">
+                <dt className="sr-only">{p.label}</dt>
+                <dd>
+                  <span className="block text-[2.4rem] font-medium leading-none tracking-[-0.05em]">
+                    {p.value.replace('%', '')}
+                    <span className="text-accent">%</span>
+                  </span>
+                  <span className="mt-1.5 block text-sm font-medium">{p.label}</span>
+                  <span className="block text-xs text-faint">{p.qualifier}</span>
+                </dd>
+              </div>
+            ))}
+          </motion.dl>
 
           <motion.div variants={fadeUp} className="mt-8 flex flex-wrap items-center gap-3">
             <Button
@@ -67,16 +80,7 @@ export function Hero() {
               View My Work
               <ArrowDown className="size-4 transition-transform duration-300 group-hover:translate-y-0.5" aria-hidden="true" />
             </Button>
-            <Button
-              variant="outline"
-              href="#/?s=contact"
-              onClick={(e) => {
-                e.preventDefault()
-                scrollToId('contact')
-              }}
-            >
-              Get in Touch
-            </Button>
+            <ResumeButton />
             <div className="ml-1 flex items-center gap-1">
               <a
                 href={site.links.github}
@@ -109,19 +113,19 @@ export function Hero() {
           transition={{ duration: 1.1, ease, delay: 0.45 }}
         >
           <SystemGraph />
-          <p className="eyebrow mt-3 text-right">Fig. 01 · The shape of systems I build</p>
+          <p className="eyebrow mt-3 text-right">Fig. 01 · Simplified view of the AI pipeline I work on</p>
         </motion.div>
       </div>
 
       {/* Scroll indicator */}
       <motion.button
         type="button"
-        onClick={() => scrollToId('about')}
+        onClick={() => scrollToId('work')}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4, duration: 0.8 }}
         className="eyebrow absolute bottom-7 left-1/2 hidden -translate-x-1/2 items-center gap-3 transition-colors hover:text-fg lg:flex"
-        aria-label="Scroll to About"
+        aria-label="Scroll to Experience"
       >
         <span className="relative block h-9 w-px overflow-hidden bg-line-strong" aria-hidden="true">
           <span className="anim-scroll-hint absolute inset-x-0 top-0 block h-1/3 bg-accent" />

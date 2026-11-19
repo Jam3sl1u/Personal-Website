@@ -11,7 +11,8 @@ type Props = {
   /** External URL or mailto. */
   href?: string
   external?: boolean
-  download?: boolean
+  /** true, or the file name the browser should save the download as. */
+  download?: boolean | string
   onClick?: MouseEventHandler<HTMLElement>
   className?: string
   'aria-label'?: string

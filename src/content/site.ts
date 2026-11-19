@@ -8,16 +8,21 @@ export const site = {
   role: 'Software Engineer',
   roleLine: 'Software Engineer · CS and Informatics, UC Irvine',
   location: 'Orange County, California',
+  /** Canonical public URL (GitHub Pages project site). Used for any absolute link. */
+  url: 'https://jam3sl1u.github.io/portfolio/',
   headline: {
-    // Rendered as: Building *intelligent systems.* Creating *meaningful experiences.*
-    lines: [
-      { plain: 'Building', accent: 'intelligent systems.' },
-      { plain: 'Creating', accent: 'meaningful experiences.' },
-    ],
+    // Rendered as: Software engineer building *production AI systems.*
+    plain: 'Software engineer building',
+    accent: 'production AI systems.',
   },
   intro:
-    "I'm a Computer Science student at UC Irvine and a software engineer at UCI Beall Applied Innovation, where I build full-stack AI applications with TypeScript, React, and AWS.",
-  status: 'Open to new-grad software engineering roles starting July 2027',
+    "I'm a Computer Science student at UC Irvine and a software engineer at UCI Beall Applied Innovation. I build full-stack AI applications with TypeScript, React, and AWS, with experience in RAG, LLM orchestration, and performance optimization.",
+  /** Hero proof points. Qualifiers matter: these are benchmark results, not production-wide claims. */
+  proof: [
+    { value: '74%', label: 'fewer context tokens', qualifier: '40-turn compaction benchmark' },
+    { value: '50%', label: 'lower p95 latency', qualifier: 'same 40-turn benchmark' },
+  ],
+  status: 'Graduating June 2027 · Seeking full-time SWE roles starting July 2027',
   email: 'jliuzhishun@gmail.com',
   links: {
     github: 'https://github.com/Jam3sl1u',
@@ -25,11 +30,14 @@ export const site = {
   },
   /**
    * Resume PDF.
-   * Leave as null until a verified, phone-free PDF exists. Then drop the file
-   * in /public (for example public/James-Liu-Resume.pdf) and set this to the
-   * file name: 'James-Liu-Resume.pdf'. Download buttons appear automatically.
+   * Leave as null until a verified, phone-free PDF exists. Then drop the file at
+   * public/James-Liu-Resume.pdf and set this to 'James-Liu-Resume.pdf'. Every
+   * Download Resume button switches to the PDF automatically; until then they
+   * open the online resume at /resume.
    */
   resumePdf: null as string | null,
+  /** File name the browser saves the PDF as. */
+  resumeDownloadName: 'James-Liu-Resume.pdf',
   /**
    * Portrait. Leave null to show the placeholder. To add one, drop a square
    * image in /public and set this to its file name, e.g. 'portrait.jpg'.
@@ -39,16 +47,28 @@ export const site = {
 } as const
 
 export const nav = [
-  { label: 'About', section: 'about' },
   { label: 'Work', section: 'work' },
   { label: 'Projects', section: 'projects' },
-  { label: 'Resume', route: '/resume' },
+  { label: 'About', section: 'about' },
   { label: 'Contact', section: 'contact' },
 ] as const
 
 /** Resolve a file in /public against the configured Vite base path. */
 export function asset(file: string): string {
   return `${import.meta.env.BASE_URL}${file.replace(/^\//, '')}`
+}
+
+/**
+ * Where a "Resume" button should go. A real PDF download when one is configured,
+ * otherwise the online resume page (which prints cleanly).
+ */
+export function resumeLink():
+  | { kind: 'pdf'; href: string; download: string; label: string }
+  | { kind: 'page'; to: string; label: string } {
+  if (site.resumePdf) {
+    return { kind: 'pdf', href: asset(site.resumePdf), download: site.resumeDownloadName, label: 'Download Resume' }
+  }
+  return { kind: 'page', to: '/resume', label: 'View Resume' }
 }
 
 export const about = {
@@ -92,18 +112,22 @@ export const leadership = {
   practices: [
     {
       title: 'Ownership',
+      short: 'Wrote the safety-layer design doc, then built it. Fixed a buggy settings experience I noticed myself.',
       body: 'At Beall, I take ownership without waiting to be asked: I wrote a design doc for the safety-layer redesign, then built it, and I fixed a buggy companion settings experience after I noticed the gap myself.',
     },
     {
       title: 'Communication',
+      short: 'Work across an international intern and contractor team, and translate between groups when discussions stall.',
       body: 'I work across an international intern and contractor team, and I have stepped in to translate between groups when a product discussion was stalling.',
     },
     {
       title: 'Asking early',
+      short: 'Get unstuck early: a contractor helped me set up Docker, and I now ask sooner on unfamiliar tools.',
       body: 'I ask for help earlier rather than later. Early in the Beall role, I got stuck setting up Docker for the first time, reached out to a contractor, and got the environment running. That experience changed how I handle unfamiliar tools.',
     },
     {
       title: 'Teaching',
+      short: 'Taught Python and AI/AR tools at Integem, tutored UCI lab students, and explain AI settings to non-technical clients.',
       body: 'I like teaching. I have taught Python and AI/AR tools at Integem, tutored UCI lab students, and explained AI product settings to non-technical clients.',
     },
   ],
@@ -125,13 +149,13 @@ export const leadership = {
 export const lookingFor = {
   statement: "I'm looking for a full-time, long-term new-grad or early-career software engineering role, starting in July 2027.",
   detail:
-    "The work I want most combines building and talking to people: full-stack or backend product engineering, practical AI systems, or roles where I can carry a customer's problem all the way into the implementation.",
+    'Software engineering is the focus: product work across the stack, reliable backend services, and practical LLM systems that hold up in production.',
   interests: [
     { title: 'Full-stack engineering', note: 'Product work across the whole stack' },
     { title: 'Backend systems', note: 'Reliable services and pipelines' },
-    { title: 'Practical AI applications', note: 'RAG, LLM pipelines, evaluation, agentic orchestration' },
-    { title: 'Customer-facing engineering', note: 'Forward deployed, solutions, or sales engineering' },
+    { title: 'Applied AI engineering', note: 'RAG, LLM orchestration, evaluation, production LLM systems' },
   ],
+  alsoOpen: 'Also open to customer-facing engineering roles, such as forward deployed or solutions engineering.',
   logistics: [
     { label: 'Start', value: 'July 2027' },
     { label: 'Work authorization', value: 'U.S. citizen, no visa sponsorship needed' },

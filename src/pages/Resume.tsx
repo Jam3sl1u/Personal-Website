@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button } from '../components/ui/Button'
 import { beall, earlierWork, roles } from '../content/experience'
 import { projects } from '../content/projects'
-import { asset, education, leadership, site } from '../content/site'
+import { education, leadership, resumeLink, site } from '../content/site'
 import { skillGroups } from '../content/skills'
 import { useDocumentTitle } from '../lib/useDocumentTitle'
 
@@ -42,7 +42,8 @@ function Bullets({ items }: { items: readonly string[] }) {
 }
 
 export function ResumePage() {
-  useDocumentTitle('Resume')
+  useDocumentTitle('Resume', 'Online resume for James Liu: UC Irvine Computer Science student and software engineer at UCI Beall Applied Innovation.')
+  const pdf = resumeLink()
   return (
     <div className="container-page pb-20 pt-28 print:pt-0">
       <div className="no-print mx-auto mb-8 flex max-w-4xl flex-wrap items-center justify-between gap-4">
@@ -51,13 +52,13 @@ export function ResumePage() {
           Back home
         </Link>
         <div className="flex flex-wrap gap-2.5">
-          {site.resumePdf && (
-            <Button href={asset(site.resumePdf)} download>
+          {pdf.kind === 'pdf' && (
+            <Button href={pdf.href} download={pdf.download} external>
               <Download className="size-4" aria-hidden="true" />
               Download PDF
             </Button>
           )}
-          <Button variant={site.resumePdf ? 'outline' : 'primary'} onClick={() => window.print()}>
+          <Button variant={pdf.kind === 'pdf' ? 'outline' : 'primary'} onClick={() => window.print()}>
             <Printer className="size-4" aria-hidden="true" />
             Print or save as PDF
           </Button>

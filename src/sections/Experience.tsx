@@ -47,7 +47,13 @@ function BeallFeature() {
               <span className="block text-muted">{beall.company}</span>
             </h3>
           </div>
-          <p className="self-end text-lg leading-relaxed text-muted text-pretty lg:col-span-5">{beall.oneLiner}</p>
+          <div className="self-end lg:col-span-5">
+            <p className="text-lg leading-relaxed text-muted text-pretty">{beall.oneLiner}</p>
+            <Link to="/work/beall" className="group mt-5 inline-flex min-h-8 items-center gap-2 text-[0.95rem] font-medium transition-colors hover:text-accent">
+              Read the case study
+              <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
+            </Link>
+          </div>
         </div>
 
         {/* Metrics */}
@@ -59,12 +65,28 @@ function BeallFeature() {
                 {m.value.includes('%') && <span className="text-accent">%</span>}
               </p>
               <p className="mt-4 text-[1.05rem] font-medium">{m.label}</p>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{m.context}</p>
+              <p className="eyebrow mt-2 !text-accent">{m.qualifier}</p>
+              <p className="mt-3 text-sm leading-relaxed text-muted">{m.context}</p>
             </RevealItem>
           ))}
         </RevealGroup>
 
+        {/* Key contributions: always visible */}
+        <div className="relative p-6 sm:p-10">
+          <h4 className="eyebrow">Key contributions</h4>
+          <ul className="mt-5 grid gap-x-12 gap-y-3 text-[0.98rem] leading-relaxed lg:grid-cols-2">
+            {beall.highlights.map((h) => (
+              <li key={h} className="relative pl-5 before:absolute before:left-0 before:top-[0.7em] before:h-px before:w-2.5 before:bg-accent">
+                {h}
+              </li>
+            ))}
+          </ul>
+        </div>
+
         {/* Focus areas */}
+        <div className="relative border-t border-line px-6 pt-6 sm:px-10">
+          <h4 className="eyebrow">Go deeper</h4>
+        </div>
         <div className="relative grid lg:grid-cols-12">
           <div
             role="tablist"
@@ -103,7 +125,7 @@ function BeallFeature() {
             })}
           </div>
 
-          <div id={`${tabsId}-panel`} role="tabpanel" aria-labelledby={`${tabsId}-tab-${tab}`} className="min-h-[19rem] p-6 sm:p-10 lg:col-span-8">
+          <div id={`${tabsId}-panel`} role="tabpanel" aria-labelledby={`${tabsId}-tab-${tab}`} className="min-h-[16rem] p-6 sm:p-10 lg:col-span-8">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={focus.id}
@@ -173,6 +195,7 @@ function RoleRow({ role, open, onToggle }: { role: Role; open: boolean; onToggle
             <span className="mt-0.5 block text-sm text-muted">
               {role.company} · {role.location}
             </span>
+            {!open && <span className="mt-2 hidden max-w-2xl text-[0.92rem] leading-relaxed text-muted md:block">{role.oneLiner}</span>}
           </span>
           <span
             className={`flex size-9 items-center justify-center rounded-full border border-line-strong text-muted transition-all duration-300 group-hover:border-fg group-hover:text-fg ${
@@ -219,22 +242,22 @@ function RoleRow({ role, open, onToggle }: { role: Role; open: boolean; onToggle
 export function Experience() {
   const [openId, setOpenId] = useState<string | null>(null)
   return (
-    <section id="work" className="border-t border-line py-24 md:py-36">
+    <section id="work" className="border-t border-line py-20 md:py-28">
       <div className="container-page">
         <SectionHeading
-          index="02"
+          index="01"
           label="Experience"
-          lede="Right now I build AI products on an early-stage team at UC Irvine's startup incubator. Before that: teaching, tutoring, and two years of client sales."
+          lede="I build AI products on an early-stage team at UC Irvine's startup incubator. Earlier roles in teaching, tutoring, and client sales are below."
         >
-          Shipping AI systems that are <em>measurably</em> safer and faster.
+          AI systems I build, <em>measure</em>, and improve.
         </SectionHeading>
 
-        <div className="mt-16">
+        <div className="mt-12">
           <BeallFeature />
         </div>
 
-        <Reveal className="mt-20">
-          <p className="eyebrow mb-2">Also</p>
+        <Reveal className="mt-16">
+          <p className="eyebrow mb-2">Other experience</p>
           <ol className="border-l border-line">
             {roles.map((role) => (
               <RoleRow key={role.id} role={role} open={openId === role.id} onToggle={() => setOpenId((cur) => (cur === role.id ? null : role.id))} />

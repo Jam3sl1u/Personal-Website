@@ -1,22 +1,22 @@
-import { Menu, Moon, Sun, X } from 'lucide-react'
+import { Download, FileText, Menu, Moon, Sun, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { nav, site } from '../../content/site'
+import { nav, resumeLink, site } from '../../content/site'
 import { ease } from '../../lib/motion'
 import { scrollToId, scrollToTop } from '../../lib/scroll'
 import { useActiveSection } from '../../lib/useActiveSection'
 import { useTheme } from '../../lib/useTheme'
 import { GithubIcon, LinkedinIcon } from '../ui/icons'
 
-const sectionIds = ['about', 'work', 'projects', 'skills', 'education', 'leadership', 'looking', 'contact'] as const
+const sectionIds = ['work', 'projects', 'about', 'skills', 'education', 'contact'] as const
 /** Sections without their own nav item fall under the nearest one. */
 const sectionToNav: Record<string, string> = {
-  about: 'about',
   work: 'work',
   projects: 'projects',
-  skills: 'projects',
-  looking: 'contact',
+  about: 'about',
+  skills: 'about',
+  education: 'about',
   contact: 'contact',
 }
 
@@ -48,15 +48,18 @@ export function Header() {
     }
   }, [open])
 
-  const activeNav = onHome ? (activeSection ? sectionToNav[activeSection] : null) : pathname === '/resume' ? 'resume' : null
+  const activeNav = onHome && activeSection ? sectionToNav[activeSection] : null
+  const resume = resumeLink()
+  const resumeCls =
+    'inline-flex h-10 items-center gap-2 rounded-full border border-line-strong px-4 text-sm font-medium transition-colors duration-300 hover:border-fg hover:bg-fg/5'
 
   const items = nav.map((item) => {
-    const key = 'section' in item ? item.section : 'resume'
-    const to = 'section' in item ? `/?s=${item.section}` : item.route
+    const key = item.section
+    const to = `/?s=${item.section}`
     const onClick = () => {
       setOpen(false)
       // Already on the home page: the URL may not change, so scroll directly.
-      if ('section' in item && onHome) scrollToId(item.section)
+      if (onHome) scrollToId(item.section)
     }
     return { key, to, label: item.label, onClick }
   })
@@ -126,11 +129,23 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-1.5">
+            {resume.kind === 'pdf' ? (
+              <a href={resume.href} download={resume.download} target="_blank" rel="noreferrer noopener" className={`${resumeCls} mr-1 hidden md:inline-flex`}>
+                <Download className="size-4" aria-hidden="true" />
+                Resume
+                <span className="sr-only">(PDF, opens in a new tab)</span>
+              </a>
+            ) : (
+              <Link to={resume.to} aria-current={pathname === '/resume' ? 'page' : undefined} className={`${resumeCls} mr-1 hidden md:inline-flex`}>
+                <FileText className="size-4" aria-hidden="true" />
+                Resume
+              </Link>
+            )}
             <button
               type="button"
               onClick={toggle}
               aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
-              className="relative flex size-10 items-center justify-center rounded-full text-muted transition-colors duration-300 hover:bg-fg/5 hover:text-fg"
+              className="relative flex size-11 items-center justify-center rounded-full text-muted transition-colors duration-300 hover:bg-fg/5 hover:text-fg"
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span
@@ -150,7 +165,7 @@ export function Header() {
               aria-expanded={open}
               aria-controls="mobile-menu"
               aria-label={open ? 'Close menu' : 'Open menu'}
-              className="flex size-10 items-center justify-center rounded-full text-fg transition-colors hover:bg-fg/5 md:hidden"
+              className="flex size-11 items-center justify-center rounded-full text-fg transition-colors hover:bg-fg/5 md:hidden"
             >
               {open ? <X className="size-5" aria-hidden="true" /> : <Menu className="size-5" aria-hidden="true" />}
             </button>
@@ -187,6 +202,22 @@ export function Header() {
                     </Link>
                   </motion.li>
                 ))}
+                <motion.li
+                  variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.5, ease } } }}
+                  className="border-b border-line"
+                >
+                  {resume.kind === 'pdf' ? (
+                    <a href={resume.href} download={resume.download} target="_blank" rel="noreferrer noopener" onClick={() => setOpen(false)} className="flex items-baseline justify-between py-5">
+                      <span className="text-4xl font-medium tracking-[-0.03em]">Resume</span>
+                      <span className="eyebrow">PDF</span>
+                    </a>
+                  ) : (
+                    <Link to={resume.to} onClick={() => setOpen(false)} className="flex items-baseline justify-between py-5">
+                      <span className="text-4xl font-medium tracking-[-0.03em]">Resume</span>
+                      <span className="eyebrow">Online</span>
+                    </Link>
+                  )}
+                </motion.li>
               </motion.ul>
             </nav>
             <div className="container-page relative flex items-center justify-between py-8">

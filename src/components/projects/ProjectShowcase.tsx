@@ -47,6 +47,25 @@ function Copy({ project }: { project: Project }) {
       <h3 className="mt-5 text-[clamp(2rem,4.4vw,3.5rem)] font-medium leading-[1] tracking-[-0.04em]">{project.title}</h3>
       <p className="serif-accent mt-2 text-2xl text-muted">{project.subtitle}</p>
       <p className="mt-6 max-w-xl text-[1.02rem] leading-relaxed text-muted text-pretty">{project.description}</p>
+      <dl className="mt-6 max-w-xl space-y-3 border-t border-line pt-5 text-[0.92rem] leading-relaxed">
+        {[
+          ['Problem', project.problem],
+          ['My role', project.role],
+          ['Used by', project.users],
+        ].map(([k, v]) => (
+          <div key={k} className="grid grid-cols-[5.25rem_1fr] gap-x-4">
+            <dt className="eyebrow pt-1">{k}</dt>
+            <dd>{v}</dd>
+          </div>
+        ))}
+      </dl>
+      <ul className="mt-5 max-w-xl space-y-2 text-[0.92rem] leading-relaxed text-muted" aria-label="Engineering highlights">
+        {project.engineering.map((e) => (
+          <li key={e} className="relative pl-5 before:absolute before:left-0 before:top-[0.7em] before:h-px before:w-2.5 before:bg-accent">
+            {e}
+          </li>
+        ))}
+      </ul>
     </>
   )
 }

@@ -22,7 +22,7 @@ export function Skills() {
   }
 
   return (
-    <section id="skills" className="border-t border-line py-24 md:py-36">
+    <section id="skills" className="border-t border-line py-20 md:py-28">
       <div className="container-page">
         <SectionHeading index="04" label="Technical skills">
           The tools I <em>reach for</em>.
@@ -47,7 +47,6 @@ export function Skills() {
                   aria-controls={`${baseId}-panel`}
                   tabIndex={selected ? 0 : -1}
                   onClick={() => setIndex(i)}
-                  onMouseEnter={() => setIndex(i)}
                   className={`group relative flex shrink-0 items-center justify-between gap-6 rounded-full border px-4 py-2.5 text-left transition-colors duration-300 lg:rounded-none lg:border-x-0 lg:border-t-0 lg:border-b lg:border-line lg:px-0 lg:py-5 ${
                     selected ? 'border-line-strong text-fg' : 'border-line text-muted hover:text-fg'
                   }`}

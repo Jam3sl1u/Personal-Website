@@ -1,7 +1,7 @@
 // Professional experience. Wording comes from the approved content kit.
 // Public-safety rules: no internal product names, no client names, "clients" plural.
 
-export type Metric = { value: string; label: string; context: string }
+export type Metric = { value: string; label: string; qualifier: string; context: string }
 export type FocusArea = { id: string; title: string; body: string; tags: string[] }
 
 export const beall = {
@@ -12,22 +12,33 @@ export const beall = {
   period: 'Nov 2025 to present',
   periodLong: 'November 2025 to present',
   oneLiner:
-    'I build a client-facing AI avatar platform from the ground up, and I work with clients to turn their requirements into shipped features.',
+    'I build a client-facing AI avatar platform from the ground up: the full stack on AWS, RAG retrieval, LLM orchestration, and a safety layer. I work directly with clients to turn requirements into shipped features.',
+  /** Always visible on the home page, so a recruiter sees the scope without opening any tab. */
+  highlights: [
+    'Own the full stack across TypeScript, React, and AWS (S3, EC2, DynamoDB, Cognito).',
+    'RAG retrieval over a Neo4j knowledge graph, prompt pipelines on the Claude API, and an S3 ingestion pipeline with OCR.',
+    'Rebuilt the safety and orchestration layer from a design doc: rules for clear cases, parallel model checks for the rest.',
+    'Built a hybrid context-compaction pipeline: deterministic trimming plus incremental LLM summarization.',
+    'Run LLM-as-judge evals, ablations, and load tests, and work with clients as the technical liaison.',
+  ],
   metrics: [
     {
       value: '74%',
       label: 'fewer context tokens',
+      qualifier: '40-turn benchmark',
       context:
         'Hybrid conversation-history compaction pipeline, on a 40-turn benchmark, while preserving 100% anchor-fact recall.',
     },
     {
       value: '50%',
       label: 'lower p95 latency',
+      qualifier: 'same 40-turn benchmark',
       context: 'The same compaction pipeline, measured on the same 40-turn benchmark.',
     },
     {
       value: '<0.1%',
       label: 'false positives',
+      qualifier: 'idiom and hyperbole eval suite',
       context: 'Safety and orchestration layer, measured on an idiom and hyperbole eval suite.',
     },
   ] satisfies Metric[],
@@ -87,6 +98,21 @@ export type Role = {
 
 export const roles: Role[] = [
   {
+    id: 'handshake',
+    role: 'Generative AI Analyst',
+    company: 'Handshake',
+    location: 'Remote, contract',
+    period: 'Oct 2025 to present',
+    compact: true,
+    oneLiner:
+      'I evaluate multimodal model outputs, especially image recognition, and write structured feedback that other teams can use.',
+    bullets: [
+      'Evaluate multimodal AI model outputs on image recognition tasks, judging object identification, scene descriptions, and visual reasoning for accuracy against detailed rubrics.',
+      'Identify and categorize model failure patterns such as misidentified objects, hallucinated details, and missed visual context, and produce structured feedback for model developers.',
+      'Compare and rank competing model responses to the same image prompt, with written justifications for each rating.',
+    ],
+  },
+  {
     id: 'integem',
     role: 'Technical Instructor Intern',
     company: 'Integem Inc.',
@@ -130,21 +156,6 @@ export const roles: Role[] = [
     ],
     story:
       'For almost two years I was the person in the middle, between the shop and the client. I had to hear what a client actually needed, not just what they asked for first, and find terms that worked on price, timeline, and specs. I still use that when I translate technical work for non-technical stakeholders.',
-  },
-  {
-    id: 'handshake',
-    role: 'Generative AI Analyst',
-    company: 'Handshake',
-    location: 'Remote, contract',
-    period: 'Oct 2025 to present',
-    compact: true,
-    oneLiner:
-      'I evaluate multimodal model outputs, especially image recognition, and write structured feedback that other teams can use.',
-    bullets: [
-      'Evaluate multimodal AI model outputs on image recognition tasks, judging object identification, scene descriptions, and visual reasoning for accuracy against detailed rubrics.',
-      'Identify and categorize model failure patterns such as misidentified objects, hallucinated details, and missed visual context, and produce structured feedback for model developers.',
-      'Compare and rank competing model responses to the same image prompt, with written justifications for each rating.',
-    ],
   },
 ]
 
